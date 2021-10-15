@@ -98,15 +98,15 @@ Pada fungsi tersebut, akan dilakukan pencarian index dari suatu nama film pada _
 
 ## Evaluation
 
-Seperti yang dijelaskan sebelumnya untuk membuat sistem rekomendasi ini digunakan beberapa metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai cosine similarity.
+Seperti yang dijelaskan sebelumnya untuk membuat sistem rekomendasi ini digunakan beberapa metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
 
-![Vektor Cosine Similarity](https://user-images.githubusercontent.com/58651943/134569725-1f36ec4f-fe26-46f0-bbf2-ca06381c69a8.png)
+![Vektor Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/sudutcs.jpeg)
 
-Metrik ini sering digunakan untuk mengukur kesamaan dokumen dalam analisis teks. Sebagai contoh, dalam studi kasus ini, cosine similarity digunakan untuk mengukur kesamaan film.
+Metrik ini sering digunakan untuk mengukur kesamaan dokumen dalam analisis teks. Sebagai contoh, dalam studi kasus ini, _cosine similarity_ digunakan untuk mengukur kesamaan film.
 
-Cosine similarity dirumuskan sebagai berikut.
+_Cosine similarity_ dirumuskan sebagai berikut.
 
-![Formula Cosine Similarity](https://user-images.githubusercontent.com/58651943/134569725-1f36ec4f-fe26-46f0-bbf2-ca06381c69a8.png)
+![Formula Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/formulacs.JPG)
 
 Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
 
@@ -119,7 +119,9 @@ def get_title_from_index(index):
 def get_index_from_title(title):
     return df[df.title == title]["index"].values[0]
 ```
+
 Setelah kita akan mendapatkan skor kesamaan semua film lain dari film pengguna. Lalu kita akan menghitung semua skor kesamaan film itu untuk membuat tupel indeks film dan skor kesamaan. Gunakan kode berikut.
+
 ```
 movie_user_likes = "Star Trek Beyond"
 movie_index = get_index_from_title(movie_user_likes)
@@ -127,13 +129,16 @@ movie_index = get_index_from_title(movie_user_likes)
 # dan kemudian menghitungnya.
 similar_movies = list(enumerate(cosine_sim[movie_index]))
 ```
+
 Kemudian urutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi, tuliskan kode ini.
+
 ```
 # Mengurutkan daftar film dari skor kesamaan terbesar.
 sorted_similar_movies = sorted(similar_movies,key=lambda x:x[1],reverse=True)[1:]
 ```
 
 Gunakan kode berikut untuk melihat 5 list film pertama yang direkomendasikan.
+
 ```
 # Membuat Perulangan untuk mencetak 5 list pertama dari daftar film
 i=0
@@ -143,7 +148,8 @@ for element in sorted_similar_movies:
     i=i+1
     if i>10:
         break
-``
+```
+
 Hasilnya seperti berikut.
 
 ![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
