@@ -158,6 +158,6 @@ Dari output tersebut, kita dapat membandingkan antara film inputan user **Star T
 
 Dilihat dari outputnya, coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
 
-![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
+![Rekomendasi Google](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/test.PNG)
 
 > **Ini adalah bagian akhir laporan**
