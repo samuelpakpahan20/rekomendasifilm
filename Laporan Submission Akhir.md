@@ -156,5 +156,8 @@ Hasilnya seperti berikut.
 
 Dari output tersebut, kita dapat membandingkan antara film inputan user **Star Trek Beyond** dan Top 10 film recommendation untuk user. 
 
+Dilihat dari outputnya, coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
+
+![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
 
 > **Ini adalah bagian akhir laporan**
