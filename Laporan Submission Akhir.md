@@ -1,14 +1,4 @@
-# Laporan Proyek Machine Learning - Fahmi Jabbar
-
-## Daftar Isi
-
--   [Project Overview](#project-overview)
--   [Business Understanding](#business-understanding)
--   [Data Understanding](#data-understanding)
--   [Data Preparation](#data-preparation)
--   [Modeling](#modeling)
--   [Evaluation](#evaluation)
--   [Referensi](#referensi)
+# Laporan Proyek Machine Learning - Samuel Partogi Pakpahan
 
 ## Project Overview
 Semua situs web hiburan atau toko online memiliki jutaan/miliar item. Akan menjadi tantangan bagi pelanggan untuk memilih yang tepat. Pada proyek ini, kita akan membuat sistem rekomendasi yang dapat membantu pengguna menemukan item yang tepat dengan meminimalkan opsi.
@@ -16,8 +6,6 @@ Semua situs web hiburan atau toko online memiliki jutaan/miliar item. Akan menja
 Sistem Rekomendasi di dunia machine learning telah menjadi sangat populer dan merupakan keuntungan besar bagi perusahaan raksasa teknologi seperti Netflix, Amazon, dan banyak lagi untuk menargetkan konten mereka ke audiens tertentu. Mesin rekomendasi ini sangat kuat dalam prediksinya sehingga mereka dapat secara dinamis mengubah status apa yang dilihat pengguna di halaman mereka berdasarkan interaksi pengguna dengan aplikasi.
 
 Kita ambil contoh [Netflix](https://www.netflixprize.com/rules.html) adalah aplikasi yang menghubungkan orang ke film yang mereka sukai. Untuk membantu pelanggan menemukan film tersebut, mereka mengembangkan sistem rekomendasi film kelas dunia bernama **CinematchSM**. Tugasnya adalah memprediksi apakah seseorang akan menikmati film berdasarkan seberapa besar mereka menyukai atau tidak menyukai film lain. Netflix menggunakan prediksi tersebut untuk membuat rekomendasi film pribadi berdasarkan selera unik setiap pelanggan. Dan sejauh ini Cinematch berjalan cukup baik. Sekarang ada banyak pendekatan alternatif menarik tentang cara kerja Cinematch yang belum dicoba Netflix. Beberapa dijelaskan dalam literatur, beberapa tidak. Pada proyek ini kita ingin mencoba beberapa pendekatan yang digunakan Netlix untuk membuat sebuah sistem rekomendasi.
-
-[← Kembali ke Daftar Isi](#daftar-isi)
 
 ## Business Understanding
 
@@ -41,11 +29,9 @@ Solusi yang dapat dilakukan untuk memenuhi tujuan dari proyek ini membuat sistem
 
 Algoritma yang digunakan untuk membuat sistem rekomendasi di proyek ini adalah dengan **Cosine Similarity**. Algoritma ini dipilih karena mudah digunakan dan juga sebagai pembanding dengan sistem rekomendasi dengan model. _Cosine similarity_ singkatnya digunakan untuk mengukur kemiripan antara dua buah vektor dan kesamaan arahnya dengan cara menghitung sudut kosinus dari kedua vektornya. Cara menghitungnya adalah dengan rumus berikut ini :
 
-![Rumus Cosine Similarity](https://user-images.githubusercontent.com/58651943/134554771-8f23cc13-ef84-4afa-b614-816b6daf65f6.png)
+![Rumus Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/rumuscs.png)
 
 Dimana nilai x, y adalah nilai vektor dan k adalah nilai _cosine similarity_ dari vektor x dan y.
-
-[← Kembali ke Daftar Isi](#daftar-isi)
 
 ## Data Understanding
 
@@ -63,7 +49,7 @@ Tabel dibawah ini merupakan informasi dari dataset yang digunakan :
 
 Gambar dibawah ini merupakan pratinjau dari dataset pada berkas <code>movie_metadata.csv</code> :
 
-![Pratinjau movie_metadata.csv](https://user-images.githubusercontent.com/58651943/134555896-96029376-fd93-4e90-ace0-24d028e5737d.png)
+![Pratinjau movie_metadata.csv](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/pratinjau.JPG)
 
 Berkas <code>movie_metadata.csv</code> berisi informasi mengenai detail sebuah film. Namun pada datanya masih terdapat banyak sekali nilai kosong seperti pada kolom <code>genres</code>, <code>cast</code>, <code>director</code>, dan <code>title</code>. Berikut ini adalah uraian variabel dari setiap kolom pada dataset :
 
@@ -98,8 +84,6 @@ Berikut adalah tahapan-tahapan dalam melakukan pra-pemrosesan data :
 -   Mengimputasi data kosong pada kolom-kolom yang kita jadikan fitur terbaik tadi menjadi string kosong. Hal ini dilakukan karena banyak sekali data pada kolom-kolom tersebut yang kosong dan apabila dihapus saja hal ini akan mengakibatkan model yang dibuat kehilangan banyak informasi untuk membangun sistem rekomendasi yang baik.
 -   Menggabungkan tiap data pada kolom fitur terbaik, hal ini dilakukan agar kita dapat menghitung nilai matrix kesamaannya.
 
-[← Kembali ke Daftar Isi](#daftar-isi)
-
 ## Modeling
 
 Setelah dilakukan pra-pemrosesan data, selanjutnya adalah membuat sistem rekomendasi _content based filtering_.
@@ -108,73 +92,63 @@ Setelah dilakukan pra-pemrosesan data, selanjutnya adalah membuat sistem rekomen
 
 Untuk menghitung _cosine similarity_ dari setiap data di dataset kita menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dengan argumen _dataframe_ sebagai objeknya. Kemudian hasil dari perhitungannya disimpan pada variabel baru. Untuk tahapan pemberian rekomendasinya, dibuat fungsi `get_title_from_index` dan `get_index_from_title` dimana fungsi tersebut akan memberikan rekomendasi terhadap suatu judul film dari indeks film dan sebaliknya.
 
-Kemudian kita akan menemukan indeks dari film itu. 
-
 Pada fungsi tersebut, akan dilakukan pencarian index dari suatu nama film pada _dataframe_ baru hasil perhitungan _cosine similarity_. Setelah itu, kita akan mengakses baris yang sesuai dengan film tersebut dengan matriks Similarity dan kemudian diurutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi. Untuk lebih jelasnya hasil rekomendasi dapat dilihat seperti berikut ini :
 
-![Rekomendasi Cosine Similarity](https://user-images.githubusercontent.com/58651943/134568493-043292d8-9002-4e2e-ac9d-7f534d4595a6.png)
-
-[← Kembali ke Daftar Isi](#daftar-isi)
+![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
 
 ## Evaluation
 
-Untuk mengukur kinerja model KNN untuk sistem rekomendasi digunakan beberapa metriks diantaranya :
+Seperti yang dijelaskan sebelumnya untuk membuat sistem rekomendasi ini digunakan beberapa metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai cosine similarity.
 
-1. Skor Calinski Harabasz
+![Vektor Cosine Similarity](https://user-images.githubusercontent.com/58651943/134569725-1f36ec4f-fe26-46f0-bbf2-ca06381c69a8.png)
 
-    Skor Calinski Harabasz digunakan untuk menghitung kriteria rasio varian. Metriks ini digunakan pada model clustering seperti yang saat ini sedang digunakan. Skor semakin tinggi ketika kluster padat dan terpisah dengan baik. Dikutip dari laman dokumentasi scikit-learn, Skor ini dihitung dengan formula [[4](https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation)] :
+Metrik ini sering digunakan untuk mengukur kesamaan dokumen dalam analisis teks. Sebagai contoh, dalam studi kasus ini, cosine similarity digunakan untuk mengukur kesamaan film.
 
-    ![Formula Calinski Harabasz - 1](https://user-images.githubusercontent.com/58651943/134569725-1f36ec4f-fe26-46f0-bbf2-ca06381c69a8.png)
+Cosine similarity dirumuskan sebagai berikut.
 
-    ![Formula Calinski Harabasz - 2](https://user-images.githubusercontent.com/58651943/134571888-be63b7ce-bcf7-4564-af28-4af9f12c20fb.png)
+![Formula Cosine Similarity](https://user-images.githubusercontent.com/58651943/134569725-1f36ec4f-fe26-46f0-bbf2-ca06381c69a8.png)
 
-    Kelebihan dari metriks ini adalah :
+Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
 
-    - Skornya tinggi apabila kluster padat dan terpisah dengan baik, yang mana bergantung pada konsep standar dari sebuah kluster.
-    - Skornya cepat untuk dihitung.
+Setelah kita mendapatkan hasil perhitungan _cosine similarity_ langkah kita selanjutnya adalah membuat fungsi `get_title_from_index` dan `get_index_from_title` yang akan mendapatkan judul film yang saat ini disukai pengguna. Kemudian kita akan menemukan indeks dari film itu. Setelah itu, kita akan mengakses baris yang sesuai dengan film ini dengan matriks Similarity. Masukkan kode berikut.
 
-    Sedangkan kekurangannya :
+```
+# Definisikan dua fungsi untuk mendapatkan judul film dari indeks film dan sebaliknya
+def get_title_from_index(index):
+    return df[df.index == index]["title"].values[0]
+def get_index_from_title(title):
+    return df[df.title == title]["index"].values[0]
+```
+Setelah kita akan mendapatkan skor kesamaan semua film lain dari film pengguna. Lalu kita akan menghitung semua skor kesamaan film itu untuk membuat tupel indeks film dan skor kesamaan. Gunakan kode berikut.
+```
+movie_user_likes = "Star Trek Beyond"
+movie_index = get_index_from_title(movie_user_likes)
+# mengakses baris yang sesuai dengan film yang diinput untuk menemukan semua skor kesamaan untuk film itu 
+# dan kemudian menghitungnya.
+similar_movies = list(enumerate(cosine_sim[movie_index]))
+```
+Kemudian urutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi, tuliskan kode ini.
+```
+# Mengurutkan daftar film dari skor kesamaan terbesar.
+sorted_similar_movies = sorted(similar_movies,key=lambda x:x[1],reverse=True)[1:]
+```
 
-    - Metriks ini hanya baik digunakan pada kasus _convex cluster_.
+Gunakan kode berikut untuk melihat 5 list film pertama yang direkomendasikan.
+```
+# Membuat Perulangan untuk mencetak 5 list pertama dari daftar film
+i=0
+print("Top 10 Film yang mirip dengan "+movie_user_likes+" adalah:\n")
+for element in sorted_similar_movies:
+    print(get_title_from_index(element[0]))
+    i=i+1
+    if i>10:
+        break
+``
+Hasilnya seperti berikut.
 
-    Penerapannya pada kode adalah dengan menggunakan fungsi [calinski_harabasz_score](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.calinski_harabasz_score.html) dari sklearn. Fungsi tersebut menerima argumen dari sebuah data yang digunakan untuk membuat model dan labelnya. Berikut ini adalah hasil penerapannya pada model KNN.
+![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
 
-    ![Skor Calinski Harabasz](https://user-images.githubusercontent.com/58651943/134569489-c29aa25c-f56b-438c-8eb4-8c2b18769fd0.png)
+Dari output tersebut, kita dapat membandingkan antara film inputan user **Star Trek Beyond** dan Top 10 film recommendation untuk user. 
 
-    Pada model ini, nampaknya kluster masih belum padat dan terpisahkan dengan baik karena nilai skornya masih cukup rendah. Memungkinkan rekomendasi pada beberapa aplikasi masih terdapat rekomendasi yang tidak sesuai dengan aplikasi yang disukai pengguna.
 
-2. Skor Davies Bouldin
-
-    Skor Davies Bouldin digunakan untuk menilai separasi tiap kluster dari model. Metriks ini digunakan pada model clustering seperti yang saat ini sedang digunakan. Skor rendah ketika separasi tiap kluster di model terpisahkan dengan baik. Dikutip dari laman dokumentasi scikit-learn, Skor ini dihitung dengan formula [[4](https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation)] :
-
-    ![Formula Davies Bouldin - 1](https://user-images.githubusercontent.com/58651943/134571953-0f466793-eb7d-4c69-8a8e-39f430074502.png)
-
-    ![Formula Davies Bouldin - 2](https://user-images.githubusercontent.com/58651943/134572201-f518acd6-eb48-49ca-aea4-96d46f6483cb.png)
-
-    Kelebihan dari metriks ini adalah :
-
-    - Komputasinya lebih mudah daripada Skor Silhouette.
-    - Skor yang dihitung hanya jumlah dan fitur yang melekat pada dataset.
-
-    Kekurangan dari metriks ini adalah :
-
-    - Metriks ini hanya baik digunakan pada kasus _convex cluster_.
-    - Penggunaan jarak centroid membatasi metriks jarak ke ruang Euclidean
-
-    ![Skor Davies Bouldin](https://user-images.githubusercontent.com/58651943/134569215-57cee0eb-ad46-4e08-a702-b4f7f65ae62f.png)
-
-    Pada model ini skornya cukup kecil sehingga menandakan modelnya sudah memiliki separasi kluster yang baik. Hal ini dibuktikan juga dengan hasil rekomendasi aplikasi yang cukup baik dan sesuai kategorinya.
-
-[← Kembali ke Daftar Isi](#daftar-isi)
-
-# Referensi
-
-[[1](https://irjet.com/archives/V8/i4/IRJET-V8I4745.pdf)] Sunasara, A. A., Jaiswal, N., Poojari, S., & Chaturvedi, A. K. (2021). _Play Store App Analysis_. International Research Journal of Engineering and Technology (IRJET).
-
-[[2](https://journals.sagepub.com/doi/10.1155/2015/475163)] Choi, S.-M., Lee, H., Han, Y.-S., Man, K. L., & Chong, W. K. (2015). _A Recommendation Model Using the Bandwagon Effect for E-Marketing Purposes in IoT_. International Journal of Distributed Sensor Networks. https://doi.org/10.1155/2015/475163
-
-[[3](https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761)] Harrison, O. (2019, July 14). _Machine Learning Basics with the K-Nearest Neighbors Algorithm_. Medium. https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761
-
-[[4](https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation)] scikit-learn. (2021). Clustering - Performance Evaluation. https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation
-
-[← Kembali ke Daftar Isi](#daftar-isi)
+> **Ini adalah bagian akhir laporan**
