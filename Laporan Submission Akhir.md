@@ -11,16 +11,11 @@
 -   [Referensi](#referensi)
 
 ## Project Overview
+Semua situs web hiburan atau toko online memiliki jutaan/miliar item. Akan menjadi tantangan bagi pelanggan untuk memilih yang tepat. Pada proyek ini, kita akan membuat sistem rekomendasi yang dapat membantu pengguna menemukan item yang tepat dengan meminimalkan opsi.
 
-<p align="center">
-  <img width="500" height="250" src="https://user-images.githubusercontent.com/58651943/134537916-c5d87bdc-1734-4bc2-9e7f-77315c45a8d4.png" alt="Sumber : https://www.kaggle.com/mehdislim01/google-play-store-apps-reviews-110k-comment">
-</p>
+Sistem Rekomendasi di dunia machine learning telah menjadi sangat populer dan merupakan keuntungan besar bagi perusahaan raksasa teknologi seperti Netflix, Amazon, dan banyak lagi untuk menargetkan konten mereka ke audiens tertentu. Mesin rekomendasi ini sangat kuat dalam prediksinya sehingga mereka dapat secara dinamis mengubah status apa yang dilihat pengguna di halaman mereka berdasarkan interaksi pengguna dengan aplikasi.
 
-Pada proyek ini, akan dibuat sebuah sistem rekomendasi aplikasi untuk pengguna di Google Play Store. Google Play Store merupakan platform penyedia aplikasi terbesar dan paling terkenal di dunia, khususnya untuk pengguna android [[1](https://irjet.com/archives/V8/i4/IRJET-V8I4745.pdf)]. Setiap harinya platform ini dibanjiri oleh munculnya banyak aplikasi baru yang dibuat oleh para pengembang aplikasi android [[1](https://irjet.com/archives/V8/i4/IRJET-V8I4745.pdf)]. Tentunya hal tersebut memiliki dampak positif dan dampak negatif. Dampak positifnya adalah munculnya banyak pengembang aplikasi baru yang mulai merilis aplikasinya di Google Play Store, kemudian banyaknya jenis-jenis aplikasi yang dapat dipilih pengguna agar sesuai dengan kebutuhannya.
-
-Di sisi lain, munculnya banyak aplikasi ini membuat pengguna kebingungan untuk memilih aplikasi mana yang perlu diunduh untuk memenuhi kebutuhannya. Sehingga perilaku pengguna dalam mengunduh aplikasi sering mengikuti tren yang sedang ada atau sering juga disebut dengan efek bandwagon [[2](https://journals.sagepub.com/doi/10.1155/2015/475163)]. Misalnya pada sebuah aplikasi komunikasi, dulu kita sering menggunakan LINE. Kemudian muncul beberapa pesaingnya seperti Kakao Talk, WeChat, dll. Namun seiring waktu banyak pengguna yang mulai beralih ke WhatsApp daripada beberapa aplikasi yang sebelumnya disebutkan. Sehingga applikasi WhatsApp pun lebih dipilih sebagai aplikasi utama untuk komunikasi.
-
-Bagi pengembang, hal tersebut merupakan sebuah kerugian karena aplikasinya sudah mulai ditinggalkan pengguna walaupun pada aplikasi yang dibuatnya sudah memiliki fitur yang tidak ada di aplikasi yang sedang digunakan banyak orang. Oleh karena itu diperlukan sebuah sistem rekomendasi agar hal-hal seperti ini tidak terjadi. Selain sebagai fungsi periklanan, sistem rekomendasi juga membuat aplikasi-aplikasi yang jarang diunduh pengguna menjadi kembali dikenal karena sebelumnya sulit untuk ditemukan atau bahkan mempermudah pengguna menemukan aplikasi yang diharapkan.
+Kita ambil contoh [Netflix](https://www.netflixprize.com/rules.html) adalah aplikasi yang menghubungkan orang ke film yang mereka sukai. Untuk membantu pelanggan menemukan film tersebut, mereka mengembangkan sistem rekomendasi film kelas dunia bernama **CinematchSM**. Tugasnya adalah memprediksi apakah seseorang akan menikmati film berdasarkan seberapa besar mereka menyukai atau tidak menyukai film lain. Netflix menggunakan prediksi tersebut untuk membuat rekomendasi film pribadi berdasarkan selera unik setiap pelanggan. Dan sejauh ini Cinematch berjalan cukup baik. Sekarang ada banyak pendekatan alternatif menarik tentang cara kerja Cinematch yang belum dicoba Netflix. Beberapa dijelaskan dalam literatur, beberapa tidak. Pada proyek ini kita ingin mencoba beberapa pendekatan yang digunakan Netlix untuk membuat sebuah sistem rekomendasi.
 
 [← Kembali ke Daftar Isi](#daftar-isi)
 
@@ -31,159 +26,77 @@ Bagi pengembang, hal tersebut merupakan sebuah kerugian karena aplikasinya sudah
 Setelah mengetahui beberapa masalah diatas, berikut ini merupakan rincian masalah yang perlu diselesaikan di proyek ini:
 
 -   Sistem rekomendasi apa yang baik untuk diterapkan pada kasus ini?
--   Bagaimana cara membuat sistem rekomendasi aplikasi untuk pengguna di Google Play Store?
+-   Bagaimana cara membuat sistem rekomendasi film?
 
 ### Goals
 
 Berikut adalah tujuan dari dibuatnya proyek ini:
 
--   Membuat sistem rekomendasi aplikasi untuk pengguna di Google Play Store.
--   Memberikan rekomendasi untuk aplikasi yang kemungkinan disukai pengguna.
+-   Membuat sistem rekomendasi film.
+-   Memberikan rekomendasi film yang kemungkinan disukai pengguna.
 
 ### Solution approach
 
-Gambar dibawah ini adalah diagram alir langkah-langkah yang dilakukan untuk melaksanakan proyek ini :
+Solusi yang dapat dilakukan untuk memenuhi tujuan dari proyek ini membuat sistem rekomendasi dengan algoritma _content based filtering_ karena sesuai dengan datasetnya. Sehingga sistem rekomendasi dibuat untuk memberikan rekomendasi pada pengguna terhadap film yang sebelumnya disukai/ditonton. 
 
-![Diagram Alir](https://user-images.githubusercontent.com/58651943/134550445-a2595ae1-89f7-439e-ac2f-b6a8d656ebc2.png)
+Algoritma yang digunakan untuk membuat sistem rekomendasi di proyek ini adalah dengan **Cosine Similarity**. Algoritma ini dipilih karena mudah digunakan dan juga sebagai pembanding dengan sistem rekomendasi dengan model. _Cosine similarity_ singkatnya digunakan untuk mengukur kemiripan antara dua buah vektor dan kesamaan arahnya dengan cara menghitung sudut kosinus dari kedua vektornya. Cara menghitungnya adalah dengan rumus berikut ini :
 
-Solusi yang dapat dilakukan untuk memenuhi tujuan dari proyek ini diantaranya :
+![Rumus Cosine Similarity](https://user-images.githubusercontent.com/58651943/134554771-8f23cc13-ef84-4afa-b614-816b6daf65f6.png)
 
--   Untuk bagian pra-pemrosesan data dilakukan beberapa teknik diantaranya :
-
-    -   Memperbaiki tipe data pada setiap kolom.
-    -   Mengimputasi data kosong pada kolom rating.
-    -   Membersihkan data kosong pada kolom.
-    -   Membersihkan data duplikasi.
-
-    Setelah hal tersebut dilakukan, selanjutnya dilakukan visualisasi data yang dapat dilihat lebih lengkap pada bagian _Data Understanding_.
-
--   Untuk bagian persiapan data (sebelum dimasukkan ke model) dilakukan beberapa teknik diantaranya :
-
-    -   Konversi label kategori menjadi _one-hot encoding_.
-    -   Standarisasi label numerik.
-
-    Penjelasan lengkap mengenai persiapan data dapat dilihat lebih lengkap pada bagian _Data Preparation_.
-
--   Kemudian untuk sistem rekomendasi yang dibuat, dipilih sistem rekomendasi _content based filtering_ karena sesuai dengan datasetnya. Sehingga sistem rekomendasi dibuat untuk memberikan rekomendasi pada pengguna terhadap aplikasi yang sebelumnya disukai/diunduh. Beberapa algoritma yang digunakan untuk membuat sistem rekomendasi di proyek ini diantaranya :
-
-    -   Dengan model, yakni algoritma K-Nearest Neighbor. Algoritma tersebut dipilih karena mudah digunakan dan juga cocok untuk kasus clustering di sistem rekomendasi. Algoritma ini mengasumsikan bahwa sesuatu yang serupa pasti selalu berdekatan. Cara kerja algoritma ini adalah sebagai berikut (diterjemahkan dari [[3](https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761)]):
-
-        -   Muat datanya
-        -   Inisialisasi nilai K (banyak tetangga/kelompok)
-        -   Pada setiap datanya :
-            -   Hitung euclidian distance antara contoh kueri dan contoh yang ada pada data tersebut dengan rumus seperti berikut ini :
-                ![Rumus Euclidian Distance](https://user-images.githubusercontent.com/58651943/133823136-ede96318-8fa8-4e93-a35f-64a66e5b5fd0.png)
-            -   Tambahkan jarak dan urutan dari contoh pada koleksi yang berururutan
-        -   Pilih entri K paling awal pada koleksi yang berurutan
-        -   Dapatkan label dari dari entri K yang dipilih
-        -   Apabila kasus regresi, kembalikan nilai rata-ratanya. Apabila kasus klasifikasi, kembalikan labelnya.
-
-        Selain itu, berikut ini merupakan kelebihan dan kekurangan algoritma dari K-Nearest Neighbor (diterjemahkan dari [[3](https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761)]):
-
-        -   Kelebihan :
-            -   Algoritmanya mudah digunakan dan sederhana
-            -   Algoritmanya sangat fleksibel, dapat diimplementasikan pada kasus klasifikasi, regresi dan pencarian
-        -   Kekurangan :
-            -   Algoritme menjadi lebih lambat secara signifikan karena jumlah contoh dan/atau prediktor/variabel yang meningkat.
-
-    -   Dengan _cosine similarity_. Algoritma ini dipilih karena mudah digunakan dan juga sebagai pembanding dengan sistem rekomendasi dengan model. _Cosine similarity_ singkatnya digunakan untuk mengukur kemiripan antara dua buah vektor dan kesamaan arahnya dengan cara menghitung sudut kosinus dari kedua vektornya. Cara menghitungnya adalah dengan rumus berikut ini :
-
-        ![Rumus Cosine Similarity](https://user-images.githubusercontent.com/58651943/134554771-8f23cc13-ef84-4afa-b614-816b6daf65f6.png)
-
-        Dimana nilai x, y adalah nilai vektor dan k adalah nilai _cosine similarity_ dari vektor x dan y.
+Dimana nilai x, y adalah nilai vektor dan k adalah nilai _cosine similarity_ dari vektor x dan y.
 
 [← Kembali ke Daftar Isi](#daftar-isi)
 
 ## Data Understanding
 
-![Sampul Dataset](https://user-images.githubusercontent.com/58651943/134548111-e092e12e-7621-4b61-86c5-3bc32bcbbfeb.png)
+![Sampul Dataset](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/sampul.JPG)
 
 Tabel dibawah ini merupakan informasi dari dataset yang digunakan :
 
-| Jenis                   | Keterangan                                                                                       |
-| ----------------------- | ------------------------------------------------------------------------------------------------ |
-| Sumber                  | [Kaggle Dataset : Google Play Store Apps](https://www.kaggle.com/adityakadiwal/water-potability) |
-| Lisensi                 | Creative Commons Attribution 3.0                                                                 |
-| Kategori                | Bisnis, Internet, Sains Komputer                                                                 |
-| Rating Penggunaan       | 7.1 (Gold)                                                                                       |
-| Jenis dan Ukuran Berkas | zip (9 MB)                                                                                       |
+| Jenis                   | Keterangan                                                                                    |
+| ----------------------- | --------------------------------------------------------------------------------------------- |
+| Sumber                  | [Kaggle Dataset : The Movies Dataset](https://www.kaggle.com/rounakbanik/the-movies-dataset)  |
+| Lisensi                 | CC0: Public Domain                                                                            |
+| Kategori                | Movie dan acara TV                                                                            |
+| Rating Penggunaan       | 8.2                                                                                           |
+| Jenis dan Ukuran Berkas | zip (944 MB)                                                                                  |
 
-Gambar dibawah ini merupakan pratinjau dari dataset pada berkas <code>googleplaystore.csv</code> :
+Gambar dibawah ini merupakan pratinjau dari dataset pada berkas <code>movie_metadata.csv</code> :
 
-![Pratinjau googleplaystore.csv](https://user-images.githubusercontent.com/58651943/134555896-96029376-fd93-4e90-ace0-24d028e5737d.png)
+![Pratinjau movie_metadata.csv](https://user-images.githubusercontent.com/58651943/134555896-96029376-fd93-4e90-ace0-24d028e5737d.png)
 
-Kemudian gambar dibawah ini adalah informasi dataset pada berkas <code>googleplaystore.csv</code> :
+Berkas <code>movie_metadata.csv</code> berisi informasi mengenai detail sebuah film. Namun pada datanya masih terdapat banyak sekali nilai kosong seperti pada kolom <code>genres</code>, <code>cast</code>, <code>director</code>, dan <code>title</code>. Berikut ini adalah uraian variabel dari setiap kolom pada dataset :
 
-![Informasi googleplaystore.csv](https://user-images.githubusercontent.com/58651943/134556179-d37b8d77-e8fe-4756-8dda-2f2922721f9c.png)
-
-Berkas <code>googleplaystore.csv</code> berisi informasi mengenai detail aplikasi yang ada di Google Play Store. Namun pada datanya masih terdapat banyak sekali nilai kosong seperti pada kolom <code>Rating</code>, <code>Type</code>, <code>Content Rating</code>, <code>Current Ver</code> dan <code>Android Ver</code>. Berikut ini adalah uraian variabel dari setiap kolom pada dataset :
-
-1. Kolom <code>App</code> merupakan kolom dengan data nama dari aplikasi.
-
-2. Kolom <code>Category</code> merupakan kolom dengan data jenis kategori dari aplikasi.
-
-3. Kolom <code>Rating</code> merupakan kolom dengan data penilaian pengguna dari aplikasi dalam satuan bintang.
-
-4. Kolom <code>Reviews</code> merupakan kolom dengan data jumlah pengguna yang telah memberi ulasan pada aplikasi
-
-5. Kolom <code>Size</code> merupakan kolom dengan data ukuran dari aplikasi dalam satuan byte.
-
-6. Kolom <code>Installs</code> merupakan kolom dengan data jumlah pengguna yang telah mengunduh dan memasang aplikasi.
-
-7. Kolom <code>Type</code> merupakan kolom dengan data jenis aplikasi yang hanya berisi 2 kategori yakni <i>Paid</i>/berbayar dan <i>Free</i>/gratis.
-
-8. Kolom <code>Price</code> merupakan kolom dengan data harga dari aplikasi dalam satuan dollar.
-
-9. Kolom <code>Content Rating</code> merupakan kolom dengan data kategori usia penggunaan untuk aplikasi, seperti <i>children</i>/<i>adult</i> dsb.
-
-10. Kolom <code>Genres</code> merupakan kolom dengan data kategori dari genre aplikasi. Setiap aplikasi bisa saja memiliki dua genre yang berbeda.
-
-11. Kolom <code>Last Updated</code> merupakan kolom dengan data tanggal terakhir aplikasi di perbaharui oleh pengembang.
-
-12. Kolom <code>Current Ver</code> merupakan kolom dengan data versi terkini aplikasi.
-
-13. Kolom <code>Android Ver</code> merupakan kolom dengan data versi android (minimal) yang dibutuhkan untuk memasang aplikasi.
-
-Terakhir, kumpulan gambar dibawah ini merupakan visualisasi data dari dataset yang digunakan (Catatan : Data divisualisasikan setelah dibersihkan) :
-
--   Data Numerik
-
-![Visualisasi Rating + Type](https://user-images.githubusercontent.com/58651943/134556654-5d9f3a45-2455-4237-950f-fc06ebfef2c1.png)
-
-![Visualisasi Size + Type](https://user-images.githubusercontent.com/58651943/134556793-147ceba8-421d-41cb-accf-65603dfcd3d0.png)
-
-![Visualisasi Reviews + Category + Type](https://user-images.githubusercontent.com/58651943/134556920-e60fa8cb-0e95-47e7-a166-7c1ad957f78d.png)
-
-![Visualisasi Price + Category + Type](https://user-images.githubusercontent.com/58651943/134557011-0aca2aaf-ac21-45ad-bca4-a1909dfbf43f.png)
-
--   Data Kategori
-
-![Visualisasi Category + Content Rating + Type + Installs](https://user-images.githubusercontent.com/58651943/134557218-85a29848-d311-47dd-b2d5-acff07c70ced.png)
-
-![Visualisasi Genres + Content Rating + Type + Installs](https://user-images.githubusercontent.com/58651943/134557401-16df0652-7f21-4ea7-9bb4-808c12e57492.png)
-
-[← Kembali ke Daftar Isi](#daftar-isi)
+1. Kolom <code>index</code> merupakan index baris.
+2. Kolom <code>budget</code> merupakan harga menonton film.
+3. Kolom <code>genres</code> merupakan jenis genre film.
+4. Kolom <code>homepage</code> merupakan situs tempat streaming film.
+5. Kolom <code>id</code> merupakan  id film.
+6. Kolom <code>keywords</code> merupakan kata kunci film.
+7. Kolom <code>original_language</code> merupakan bahasa yang digunakan pada film.
+8. Kolom <code>original_title</code> merupakan bahasa pada judul.
+9. Kolom <code>overview</code> merupakan sinopsis film.
+10. Kolom <code>popularity</code> merupakan nilai popularitas film.
+11. Kolom <code>production_companies</code> merupakan nama perusahaan yang memproduksi film.
+12. Kolom <code>production_countries</code> merupakan tempat perusahaan yang memproduksi.
+13. Kolom <code>release_date</code> merupakan tanggal film dirilis.
+14. Kolom <code>runtime</code> merupakan durasi film.
+15. Kolom <code>spoken_languages</code> merupakan bahasa yang digunakan pada film.
+16. Kolom <code>status</code> merupakan nilai apakah sudah dirilis atau belum.
+17. Kolom <code>title</code> merupakan judul film.
+18. Kolom <code>vote_average</code> merupakan rata-rata nilai voting.
+19. Kolom <code>vote_count</code> merupakan jumlah voting.
+20. Kolom <code>cast</code> merupakan nama-nama pemain film.
+21. Kolom <code>crew</code> merupakan nama-nama karyawan.
+22. Kolom <code>director</code> merupakan nama direktur film.
+23. Kolom <code>revenue</code> merupakan hasil pendapatan dari film.
 
 ## Data Preparation
 
-Seperti yang sudah dijelaskan pada bagian _Solution approach_, berikut adalah tahapan-tahapan dalam melakukan pra-pemrosesan data :
-
--   Memperbaiki tipe data pada setiap kolom. Hal ini dilakukan karena tipe data pada setiap kolom belum sesuai dengan data di kolomnya, selain itu juga memperbaiki data yang ada di kolomnya. Proses yang dilakukan pada setiap kolom berbeda-beda, berikut ini merupakan rinciannya :
-    -   Kolom Rating : Menghapus data rating yang nilainya > 5, mengimputasi data kosong.
-    -   Kolom Reviews : Mengganti tipe data kolom menjadi int.
-    -   Kolom Size : Mengganti format _Size_ menjadi dalam format MB.
-    -   Kolom Installs : Menghapus simbol "+" dan ",".
-    -   Kolom Price : Menghapus simbol "$".
-    -   Kolom Last Updated : Mengganti tipe data menjadi _datetime_.
-    -   Kolom Type, Android Ver, Current Ver : Menghapus data kosong.
-    Dengan memperbaiki data pada kolomnya, tipe data kolom pun secara otomatis berubah.
--   Mengimputasi data kosong pada kolom Rating. Hal ini dilakukan karena banyak sekali data rating yang kosong dan apabila dihapus saja hal ini akan mengakibatkan model yang dibuat kehilangan banyak informasi untuk membangun sistem rekomendasi yang baik. Selain itu terdapat peluang juga untuk mengimputasi data Rating karena datanya memiliki tipe data _float_ dengan rentang 1-5. Proses yang dilakukan untuk mengimputasi data adalah dengan menggunakan [KNNImputer](https://scikit-learn.org/stable/modules/generated/sklearn.impute.KNNImputer.html) dari sklearn. Dikutip dari dokumentasinya, KNNImputer mengimputasi data menggunakan K-Nearest Neighbor. Dengan demikian data Rating akan tetap terjaga distribusi datanya.
--   Membersihkan data kosong pada kolom Type, Android Ver dan Current Ver. Hal ini dilakukan karena data pada kategori ini tidak bisa diimputasi. Apabila diimputasi, akan menyebabkan disinformasi kepada pengguna, misalnya pada kolom Type yang berisi mengenai informasi apakah aplikasi tersebut berbayar atau tidak. Selain itu data yang kosong pada kolom ini hanya sedikit, sehingga tidak banyak informasi yang hilang dari keseluruhan datanya.
--   Membersihkan data duplikasi. Hal ini dilakukan karena dapat menyebabkan munculnya data yang sama sebanyak 2 kali atau lebih pada sistem rekomendasi yang nantinya dibuat. Oleh karena itu data duplikasi ini perlu dihilangkan karena sebenarnya data tersebut sudah ada pada dataset. Proses ini dilakukan dengan menggunakan _method_ `drop_duplicates` pada _dataframe_ dari dataset.
--   Konversi label kategori menjadi _one-hot encoding_. Hal ini dilakukan untuk memudahkan pencarian nilai terdekat dari setiap aplikasi. Sebelumnya data ini merupakan data kategori dan dirubah menjadi data numerik yang ada pada setiap kolom yang berbeda kategori. Proses ini dialkukan menggunakan _method_ `get_dummies` pada kolom _dataframe_ dari dataset yang selanjutnya datanya disatukan pada _dataframe_.
--   Standarisasi label numerik. Hal ini dilakukan agar rentang nilai pada label numerik hanya antara 0-1 sehingga dapat mempercepat komputasinya. Selain itu standarisasi juga membuat semua label numerik memiliki rentang nilai yang sama. Proses ini dilakukan menggunakan [MinMaxScaler](https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html) dari sklearn. Secara matematis, data yang akan diskala-kan dihitung dengan rumus berikut ini.
-
-    <img width="270" src="https://user-images.githubusercontent.com/58651943/133828773-ee4e17e9-5109-4ac5-96d2-1c07650e6c1f.png" alt="Rumus MinMaxScaler">
+Berikut adalah tahapan-tahapan dalam melakukan pra-pemrosesan data :
+-   Memilih kolom yang dijadikan fitur terbaik, karena kita tidak memakai semua kolomnya. Jadi, kita hanya pakai kolom `keywords`, `cast`, `genre`, `director`, dan `title` untuk digunakan sebagai kumpulan fitur terbaiknya.
+-   Mengimputasi data kosong pada kolom-kolom yang kita jadikan fitur terbaik tadi menjadi string kosong. Hal ini dilakukan karena banyak sekali data pada kolom-kolom tersebut yang kosong dan apabila dihapus saja hal ini akan mengakibatkan model yang dibuat kehilangan banyak informasi untuk membangun sistem rekomendasi yang baik.
+-   Menggabungkan tiap data pada kolom fitur terbaik, hal ini dilakukan agar kita dapat menghitung nilai matrix kesamaannya.
 
 [← Kembali ke Daftar Isi](#daftar-isi)
 
@@ -191,19 +104,15 @@ Seperti yang sudah dijelaskan pada bagian _Solution approach_, berikut adalah ta
 
 Setelah dilakukan pra-pemrosesan data, selanjutnya adalah membuat sistem rekomendasi _content based filtering_.
 
-1. Dengan model K-Nearest Neighbor
+### Dengan Cosine Similarity
 
-    Untuk membangun model ini, digunakan fungsi (NearestNeighbor)[https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.NearestNeighbors.html] dari sklearn dengan parameter metriksnya yakni euclidian. Kemudian fungsi tersebut di inisiasikan sebagai model yang selanjutnya dilakukan _fitting_ terhadap data yang ada pada _dataframe_. Setelah itu dibuat fungsi `getRecommendedApps_model` untuk memberikan rekomendasi terhadap suatu nama aplikasi yang dimana skenarionya adalah apabila pengguna menyukai atau mengunduh aplikasi tersebut, maka berikan rekomendasi ini sebagai aplikasi yang mungkin disukai. Hasil rekomendasinya adalah seperti berikut :
+Untuk menghitung _cosine similarity_ dari setiap data di dataset kita menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dengan argumen _dataframe_ sebagai objeknya. Kemudian hasil dari perhitungannya disimpan pada variabel baru. Untuk tahapan pemberian rekomendasinya, dibuat fungsi `get_title_from_index` dan `get_index_from_title` dimana fungsi tersebut akan memberikan rekomendasi terhadap suatu judul film dari indeks film dan sebaliknya.
 
-    ![Rekomendasi KNN](https://user-images.githubusercontent.com/58651943/134567304-0e3b7895-61af-46cc-b82b-58a099c0a968.png)
+Kemudian kita akan menemukan indeks dari film itu. 
 
-2. Dengan _cosine similarity_
+Pada fungsi tersebut, akan dilakukan pencarian index dari suatu nama film pada _dataframe_ baru hasil perhitungan _cosine similarity_. Setelah itu, kita akan mengakses baris yang sesuai dengan film tersebut dengan matriks Similarity dan kemudian diurutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi. Untuk lebih jelasnya hasil rekomendasi dapat dilihat seperti berikut ini :
 
-    Selanjutnya, rekomendasi pun dapat diberikan dengan menghitung _cosine similarity_ dari setiap data di dataset menggunakan fungsi [cosine_similarity](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dengan argumen _dataframe_ sebagai objeknya. Kemudian hasil dari perhitungannya disimpan pada dataframe baru. Untuk tahapan pemberian rekomendasinya, dibuat fungsi `getRecommendedApps_cosine` dimana fungsi tersebut akan memberikan rekomendasi terhadap suatu nama aplikasi dengan skenario yang sama dengan nomor 1.
-
-    Pada fungsi tersebut, akan dilakukan pencarian kolom dari suatu nama aplikasi pada _dataframe_ baru hasil perhitungan _cosine similarity_. Kemudian diurutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi dan juga urutannya. Setiap urutan ke 2 terakhir sampai ke n terakhir merupakan kandidat yang memiliki nilai _cosine similarity_ yang sama maka akan ditampilkan sebagai hasil rekomendasinya. Urutan paling terakhir merupakan nilai _cosine similarity_ dari kolom dengan nama aplikasi yang sama. Untuk lebih jelasnya hasil rekomendasi dapat dilihat seperti berikut ini :
-
-    ![Rekomendasi Cosine Similarity](https://user-images.githubusercontent.com/58651943/134568493-043292d8-9002-4e2e-ac9d-7f534d4595a6.png)
+![Rekomendasi Cosine Similarity](https://user-images.githubusercontent.com/58651943/134568493-043292d8-9002-4e2e-ac9d-7f534d4595a6.png)
 
 [← Kembali ke Daftar Isi](#daftar-isi)
 
