@@ -90,27 +90,15 @@ Setelah dilakukan pra-pemrosesan data, selanjutnya adalah membuat sistem rekomen
 
 ### Dengan Cosine Similarity
 
-Untuk menghitung _cosine similarity_ dari setiap data di dataset kita menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dengan argumen _dataframe_ sebagai objeknya. Kemudian hasil dari perhitungannya disimpan pada variabel baru. Untuk tahapan pemberian rekomendasinya, dibuat fungsi `get_title_from_index` dan `get_index_from_title` dimana fungsi tersebut akan memberikan rekomendasi terhadap suatu judul film dari indeks film dan sebaliknya.
+Untuk menghitung _cosine similarity_ dari setiap data di dataset, kita menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dan objek _dataframe_ sebagai argumen/parameternya. Kemudian hasil dari perhitungannya disimpan pada variabel baru. Untuk menggunakan fungsi tersebut, masukkan kode berikut:
 
-Pada fungsi tersebut, akan dilakukan pencarian index dari suatu nama film pada _dataframe_ baru hasil perhitungan _cosine similarity_. Setelah itu, kita akan mengakses baris yang sesuai dengan film tersebut dengan matriks Similarity dan kemudian diurutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi. Untuk lebih jelasnya hasil rekomendasi dapat dilihat seperti berikut ini :
+```
+cv = CountVectorizer()
+count_matrix = cv.fit_transform(df['combined_features'])
+cosine_sim = cosine_similarity(count_matrix)
+```
 
-![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
-
-## Evaluation
-
-Seperti yang dijelaskan sebelumnya untuk membuat sistem rekomendasi ini digunakan beberapa metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
-
-![Vektor Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/sudutcs.jpeg)
-
-Metrik ini sering digunakan untuk mengukur kesamaan dokumen dalam analisis teks. Sebagai contoh, dalam studi kasus ini, _cosine similarity_ digunakan untuk mengukur kesamaan film.
-
-_Cosine similarity_ dirumuskan sebagai berikut.
-
-![Formula Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/formulacs.JPG)
-
-Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
-
-Setelah kita mendapatkan hasil perhitungan _cosine similarity_ langkah kita selanjutnya adalah membuat fungsi `get_title_from_index` dan `get_index_from_title` yang akan mendapatkan judul film yang saat ini disukai pengguna. Kemudian kita akan menemukan indeks dari film itu. Setelah itu, kita akan mengakses baris yang sesuai dengan film ini dengan matriks Similarity. Masukkan kode berikut.
+Setelah kita mendapatkan hasil perhitungan _cosine similarity_ langkah kita selanjutnya adalah membuat fungsi `get_title_from_index` dan `get_index_from_title` yang akan mendapatkan judul film yang saat ini disukai pengguna. Kemudian kita akan menemukan indeks dari judul film itu dan sebaliknya. Setelah itu, kita akan mengakses baris yang sesuai dengan film ini dengan matriks Similarity. Masukkan kode berikut.
 
 ```
 # Definisikan dua fungsi untuk mendapatkan judul film dari indeks film dan sebaliknya
@@ -130,17 +118,17 @@ movie_index = get_index_from_title(movie_user_likes)
 similar_movies = list(enumerate(cosine_sim[movie_index]))
 ```
 
-Kemudian urutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi, tuliskan kode ini.
+Kemudian urutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi (_Descending_), tuliskan kode ini.
 
 ```
 # Mengurutkan daftar film dari skor kesamaan terbesar.
 sorted_similar_movies = sorted(similar_movies,key=lambda x:x[1],reverse=True)[1:]
 ```
 
-Gunakan kode berikut untuk melihat 5 list film pertama yang direkomendasikan.
+Gunakan kode berikut untuk melihat 10 list film pertama yang direkomendasikan.
 
 ```
-# Membuat Perulangan untuk mencetak 5 list pertama dari daftar film
+# Membuat Perulangan untuk mencetak 10 list pertama dari daftar film
 i=0
 print("Top 10 Film yang mirip dengan "+movie_user_likes+" adalah:\n")
 for element in sorted_similar_movies:
@@ -156,7 +144,27 @@ Hasilnya seperti berikut.
 
 Dari output tersebut, kita dapat membandingkan antara film inputan user **Star Trek Beyond** dan Top 10 film recommendation untuk user. 
 
-Dilihat dari outputnya, coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
+## Evaluation
+
+Seperti yang dijelaskan sebelumnya untuk membuat sistem rekomendasi ini digunakan metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
+
+![Vektor Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/sudutcs.jpeg)
+
+Metrik ini sering digunakan untuk mengukur kesamaan dokumen dalam analisis teks. Sebagai contoh, dalam studi kasus ini, _cosine similarity_ digunakan untuk mengukur kesamaan film.
+
+_Cosine similarity_ dirumuskan sebagai berikut.
+
+![Formula Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/formulacs.JPG)
+
+Cosine similarity pada Python menghitung kesamaan sebagai dot product yang dinormalisasi dari masukan sampel X dan Y. Penerapannya pada kode adalah dengan menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn untuk mendapatkan nilai cosinus dua vektor dalam matriks. Berikut ini adalah hasil penerapannya pada model _content based filtering_.
+
+*ps: Untuk kode lengkapnya dapat dilihat pada Tab [Modeling](#modeling)*
+
+![Kode CS]()
+
+Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
+
+Dilihat dari output hasil rekomendasi pada Tab [Modeling](#modeling) tadi, coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
 
 ![Rekomendasi Google](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/test.PNG)
 
