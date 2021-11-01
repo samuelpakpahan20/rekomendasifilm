@@ -158,13 +158,13 @@ _Cosine similarity_ dirumuskan sebagai berikut.
 
 Cosine similarity pada Python menghitung kesamaan sebagai dot product yang dinormalisasi dari masukan sampel X dan Y. Penerapannya pada kode adalah dengan menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn untuk mendapatkan nilai cosinus dua vektor dalam matriks. Berikut ini adalah hasil penerapannya pada model _content based filtering_.
 
-*ps: Untuk kode lengkapnya dapat dilihat pada Tab [Modeling](#modeling)*
+*ps: Untuk kode lengkapnya dapat dilihat pada tab [Modeling](#modeling)*
 
-![Kode CS]()
+![Kode CS](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilcs.png)
 
 Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
 
-Dilihat dari output hasil rekomendasi pada Tab [Modeling](#modeling) tadi, coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
+Terakhir, dilihat dari output hasil rekomendasi pada yab [Modeling](#modeling) tadi, mari coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
 
 ![Rekomendasi Google](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/test.PNG)
 
