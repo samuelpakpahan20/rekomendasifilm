@@ -160,7 +160,18 @@ Cosine similarity pada Python menghitung kesamaan sebagai dot product yang dinor
 
 *ps: Untuk kode lengkapnya dapat dilihat pada tab [Modeling](#modeling)*
 
-![Kode CS](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilcs.png)
+![Skor CS](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilcs.png)
+
+Masukkan kode berikut untuk melihat daftar skor kesamaan (_cosine similarity_) semua film lain dari film pengguna.
+
+```
+df_skor = pd.DataFrame(sorted_similar_movies, columns=['Index','Skor similarity'])
+df_skor.head(11).style.hide_index()
+```
+
+Hasilnya seperti berikut.
+
+![Skor Kesamaan](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/skorcs.png)
 
 Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
 
