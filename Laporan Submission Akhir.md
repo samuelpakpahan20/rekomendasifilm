@@ -123,7 +123,7 @@ df_skor.head(11).style.hide_index()
 
 Hasilnya seperti berikut.
 
-![Skor Kesamaan](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+![Skor Kesamaan](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/skorsimilar.png)
 
 Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
 
@@ -158,7 +158,7 @@ Kelebihan dari metriks ini berfokus pada bagaimana performa (prediksi) model ter
 
 Misal, pada sistem rekomendasi kita ini, pengguna sebelumnya pernah pernah menonton film *Star Trek Beyond* sehingga kita ingin merekomendasikan film yang similar dengan film yang pernah ditonton pengguna (*Star Trek Beyond*). Hasil rekomendasi kita seperti berikut:
 
-![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/genrerekom.png)
 
 Dari hasil rekomendasi di atas, diketahui bahwa *Star Trek Beyond* termasuk ke dalam genre _Action, Adventure, Science, Fiction_. Dari 11 item yang direkomendasikan, 10 item memiliki genre _Action, Adventure, Science, Fiction_ (similar).
 
@@ -173,7 +173,7 @@ print(precision)
 
 Hasilnya seperti berikut.
 
-![Hasil presisi](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+![Hasil presisi](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilpresisi.JPG)
 
  Dari hasil ini, metrik Precision kita bernilai 0.909, berarti Precision sistem kita sebesar 91%.
 
