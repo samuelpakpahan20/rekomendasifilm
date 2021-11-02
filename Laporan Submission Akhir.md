@@ -127,22 +127,22 @@ Hasilnya seperti berikut.
 
 Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
 
-Gunakan kode berikut untuk melihat 10 list film pertama yang direkomendasikan.
+Gunakan kode berikut untuk melihat 11 list film pertama yang direkomendasikan.
 
 ```
 # Membuat Perulangan untuk mencetak 11 list pertama dari daftar film
 i=0
 print("Top 11 Film yang mirip dengan "+movie_user_likes+" adalah:\n")
 for element in sorted_similar_movies:
-    print(get_title_from_index(element[0]))
-    i=i+1
-    if i>10:
-        break
+  print(get_title_from_index(element[0]))
+  i=i+1
+  if i>10:
+      break
 ```
 
 Hasilnya seperti berikut.
 
-![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
 
 ## Evaluation
 
@@ -158,7 +158,7 @@ Kelebihan dari metriks ini berfokus pada bagaimana performa (prediksi) model ter
 
 Misal, pada sistem rekomendasi kita ini, pengguna sebelumnya pernah pernah menonton film *Star Trek Beyond* sehingga kita ingin merekomendasikan film yang similar dengan film yang pernah ditonton pengguna (*Star Trek Beyond*). Hasil rekomendasi kita seperti berikut:
 
-![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/genrerekom.png)
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
 
 Dari hasil rekomendasi di atas, diketahui bahwa *Star Trek Beyond* termasuk ke dalam genre _Action, Adventure, Science, Fiction_. Dari 11 item yang direkomendasikan, 10 item memiliki genre _Action, Adventure, Science, Fiction_ (similar).
 
@@ -177,7 +177,7 @@ Hasilnya seperti berikut.
 
  Dari hasil ini, metrik Precision kita bernilai 0.909, berarti Precision sistem kita sebesar 91%.
 
-Terakhir, dilihat dari output hasil rekomendasi pada yab [Modeling](#modeling) tadi, mari coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
+Terakhir, dilihat dari output hasil rekomendasi pada tab [Modeling](#modeling) tadi, mari coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
 
 ![Rekomendasi Google](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/test.PNG)
 
