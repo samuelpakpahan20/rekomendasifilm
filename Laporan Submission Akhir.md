@@ -142,7 +142,7 @@ for element in sorted_similar_movies:
 
 Hasilnya seperti berikut.
 
-![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
 
 ## Evaluation
 
@@ -156,9 +156,9 @@ Kelebihan dari metriks ini berfokus pada bagaimana performa (prediksi) model ter
 
 ![Movie user like](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/userlike.JPG)
 
-Misal, pada sistem rekomendasi kita ini, pengguna sebelumnya pernah pernah menonton film *Star Trek Beyond* sehingga kita ingin merekomendasikan film yang similar dengan film yang pernah ditonton pengguna (*Star Trek Beyond*). Hasil rekomendasi kita seperti berikut:
+Misal, pada sistem rekomendasi kita ini, pengguna sebelumnya pernah menonton film *Star Trek Beyond* sehingga kita ingin merekomendasikan film yang similar dengan film yang pernah ditonton pengguna (*Star Trek Beyond*). Hasil rekomendasi kita seperti berikut:
 
-![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/rekomgenre.png)
 
 Dari hasil rekomendasi di atas, diketahui bahwa *Star Trek Beyond* termasuk ke dalam genre _Action, Adventure, Science, Fiction_. Dari 11 item yang direkomendasikan, 10 item memiliki genre _Action, Adventure, Science, Fiction_ (similar).
 
