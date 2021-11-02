@@ -154,7 +154,7 @@ Dari hasil diatas, sistem rekomendasi akan memberikan sekumpulan item sebagai ha
 
 Kelebihan dari metriks ini berfokus pada bagaimana performa (prediksi) model terhadap item-item yang relevan, kekurangannya metriks ini tidak memperhitungkan item-item yang kurang relevan.
 
-![Movie user like](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+![Movie user like](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/userlike.JPG)
 
 Misal, pada sistem rekomendasi kita ini, pengguna sebelumnya pernah pernah menonton film *Star Trek Beyond* sehingga kita ingin merekomendasikan film yang similar dengan film yang pernah ditonton pengguna (*Star Trek Beyond*). Hasil rekomendasi kita seperti berikut:
 
