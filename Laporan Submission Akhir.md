@@ -86,67 +86,7 @@ Berikut adalah tahapan-tahapan dalam melakukan pra-pemrosesan data :
 
 ## Modeling
 
-Setelah dilakukan pra-pemrosesan data, selanjutnya adalah membuat sistem rekomendasi _content based filtering_.
-
-### Dengan Cosine Similarity
-
-Untuk menghitung _cosine similarity_ dari setiap data di dataset, kita menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dan objek _dataframe_ sebagai argumen/parameternya. Kemudian hasil dari perhitungannya disimpan pada variabel baru. Untuk menggunakan fungsi tersebut, masukkan kode berikut:
-
-```
-cv = CountVectorizer()
-count_matrix = cv.fit_transform(df['combined_features'])
-cosine_sim = cosine_similarity(count_matrix)
-```
-
-Setelah kita mendapatkan hasil perhitungan _cosine similarity_ langkah kita selanjutnya adalah membuat fungsi `get_title_from_index` dan `get_index_from_title` yang akan mendapatkan judul film yang saat ini disukai pengguna. Kemudian kita akan menemukan indeks dari judul film itu dan sebaliknya. Setelah itu, kita akan mengakses baris yang sesuai dengan film ini dengan matriks Similarity. Masukkan kode berikut.
-
-```
-# Definisikan dua fungsi untuk mendapatkan judul film dari indeks film dan sebaliknya
-def get_title_from_index(index):
-    return df[df.index == index]["title"].values[0]
-def get_index_from_title(title):
-    return df[df.title == title]["index"].values[0]
-```
-
-Setelah kita akan mendapatkan skor kesamaan semua film lain dari film pengguna. Lalu kita akan menghitung semua skor kesamaan film itu untuk membuat tupel indeks film dan skor kesamaan. Gunakan kode berikut.
-
-```
-movie_user_likes = "Star Trek Beyond"
-movie_index = get_index_from_title(movie_user_likes)
-# mengakses baris yang sesuai dengan film yang diinput untuk menemukan semua skor kesamaan untuk film itu 
-# dan kemudian menghitungnya.
-similar_movies = list(enumerate(cosine_sim[movie_index]))
-```
-
-Kemudian urutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi (_Descending_), tuliskan kode ini.
-
-```
-# Mengurutkan daftar film dari skor kesamaan terbesar.
-sorted_similar_movies = sorted(similar_movies,key=lambda x:x[1],reverse=True)[1:]
-```
-
-Gunakan kode berikut untuk melihat 10 list film pertama yang direkomendasikan.
-
-```
-# Membuat Perulangan untuk mencetak 10 list pertama dari daftar film
-i=0
-print("Top 10 Film yang mirip dengan "+movie_user_likes+" adalah:\n")
-for element in sorted_similar_movies:
-    print(get_title_from_index(element[0]))
-    i=i+1
-    if i>10:
-        break
-```
-
-Hasilnya seperti berikut.
-
-![Rekomendasi Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
-
-Dari output tersebut, kita dapat membandingkan antara film inputan user **Star Trek Beyond** dan Top 10 film recommendation untuk user. 
-
-## Evaluation
-
-Seperti yang dijelaskan sebelumnya untuk membuat sistem rekomendasi ini digunakan metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
+Setelah dilakukan pra-pemrosesan data, selanjutnya adalah membuat sistem rekomendasi _content based filtering_. Seperti yang sudah disebutkan pada tab [Solution approach](#solution-approach) untuk membuat sistem rekomendasi ini digunakan metriks **Cosine Similarity** yang mengukur kesamaan antara dua vektor dan menentukan apakah kedua vektor tersebut menunjuk ke arah yang sama. Ia menghitung sudut cosinus antara dua vektor. Semakin kecil sudut cosinus, semakin besar nilai _cosine similarity_.
 
 ![Vektor Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/sudutcs.jpeg)
 
@@ -156,24 +96,86 @@ _Cosine similarity_ dirumuskan sebagai berikut.
 
 ![Formula Cosine Similarity](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/formulacs.JPG)
 
-Cosine similarity pada Python menghitung kesamaan sebagai dot product yang dinormalisasi dari masukan sampel X dan Y. Penerapannya pada kode adalah dengan menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn untuk mendapatkan nilai cosinus dua vektor dalam matriks. Berikut ini adalah hasil penerapannya pada model _content based filtering_.
-
-*ps: Untuk kode lengkapnya dapat dilihat pada tab [Modeling](#modeling)*
-
-![Skor CS](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilcs.png)
-
-Masukkan kode berikut untuk melihat daftar skor kesamaan (_cosine similarity_) semua film lain dari film pengguna.
+Cosine similarity pada Python menghitung kesamaan sebagai dot product yang dinormalisasi dari masukan sampel X dan Y. Penerapannya pada kode adalah dengan menggunakan fungsi [cosine_similarity](https://scikitlearn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html) dari sklearn untuk mendapatkan nilai cosinus dua vektor dalam matriks. Prosesnya adalah dengan memanggil fungsi `cosine_similarity` dan objek _dataframe_ sebagai argumen/parameternya. Kemudian hasil dari perhitungannya disimpan pada variabel baru. Untuk menggunakan fungsi tersebut, masukkan kode berikut:
 
 ```
+cv = CountVectorizer()
+count_matrix = cv.fit_transform(df['combined_features'])
+cosine_sim = cosine_similarity(count_matrix)
+```
+
+Setelah kita mendapatkan hasil perhitungan _cosine similarity_ langkah kita selanjutnya adalah membuat fungsi `get_title_from_index` dan `get_index_from_title` yang akan mendapatkan judul film dari indeks film dan sebaliknya, fungsi `get_genres_from_index` untuk mendapatkan genre film dari index film, dan fungsi `get_genres_from_title` untuk mendapatkan genre film dari judul film. Setelah itu, kita akan mengakses baris yang sesuai dengan film yang disukai pengguna saat ini dengan matriks Similarity. Selanjutnya, kita akan mendapatkan skor kesamaan semua film lain dari film pengguna. Lalu kita akan menghitung semua skor kesamaan film itu dan mengurutkan nilainya berdasarkan nilai _cosine similarity_ tertinggi (_Descending_). Tuliskan kode ini.
+
+```
+movie_user_likes = "Star Trek Beyond"
+movie_index = get_index_from_title(movie_user_likes) # untuk mendapatkan index film berdasarkan judul film yang disukai pengguna 
+movie_genres = get_genres_from_title(movie_user_likes) # untuk mendapatkan genre film berdasarkan judul film yang disukai pengguna
+
+# mengakses baris yang sesuai dengan film yang diinput untuk menemukan semua skor kesamaan untuk film itu 
+# dan kemudian menghitungnya.
+similar_movies = list(enumerate(cosine_sim[movie_index]))
+
+# Mengurutkan daftar film dari skor kesamaan terbesar (Descending).
+sorted_similar_movies = sorted(similar_movies,key=lambda x:x[1],reverse=True)[1:]
 df_skor = pd.DataFrame(sorted_similar_movies, columns=['Index','Skor similarity'])
 df_skor.head(11).style.hide_index()
 ```
 
 Hasilnya seperti berikut.
 
-![Skor Kesamaan](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/skorcs.png)
+![Skor Kesamaan](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
 
 Dengan menerapkan definisi kesamaan, ini sebenarnya akan sama dengan 1 jika kedua vektor identik, dan akan menjadi 0 jika keduanya ortogonal. Dengan kata lain, kesamaan adalah angka yang dibatasi antara 0 dan 1 yang memberi tahu kita seberapa mirip kedua vektor tersebut.
+
+Gunakan kode berikut untuk melihat 10 list film pertama yang direkomendasikan.
+
+```
+# Membuat Perulangan untuk mencetak 11 list pertama dari daftar film
+i=0
+print("Top 11 Film yang mirip dengan "+movie_user_likes+" adalah:\n")
+for element in sorted_similar_movies:
+    print(get_title_from_index(element[0]))
+    i=i+1
+    if i>10:
+        break
+```
+
+Hasilnya seperti berikut.
+
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/hasilrekomendasi.JPG)
+
+## Evaluation
+
+Dari hasil diatas, sistem rekomendasi akan memberikan sekumpulan item sebagai hasil rekomendasi untuk user. Dari beberapa item-item tersebut tentu tidak semua item yang relevan atau yang sesuai dengan kebutuhan user. Untuk mengetahui kualitas hasil rekomendasi, kita akan menggunakan metrik **Precision** yang membandingkan antara item yang relevan dengan total item yang dihasilkan atau yang direkomendasikan kepada user. Kita dapat menghitungnya dengan rumus dibawah ini
+
+![Formula Precision](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/presisi.JPG)
+
+*Relevant items retrieved* adalah jumlah item relevan yang direkomendasikan sedangkan *retrieved items* adalah jumlah total itemyang direkomendasikan.
+
+Kelebihan dari metriks ini berfokus pada bagaimana performa (prediksi) model terhadap item-item yang relevan, kekurangannya metriks ini tidak memperhitungkan item-item yang kurang relevan.
+
+![Movie user like](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+
+Misal, pada sistem rekomendasi kita ini, pengguna sebelumnya pernah pernah menonton film *Star Trek Beyond* sehingga kita ingin merekomendasikan film yang similar dengan film yang pernah ditonton pengguna (*Star Trek Beyond*). Hasil rekomendasi kita seperti berikut:
+
+![Rekomendasi model](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+
+Dari hasil rekomendasi di atas, diketahui bahwa *Star Trek Beyond* termasuk ke dalam genre _Action, Adventure, Science, Fiction_. Dari 11 item yang direkomendasikan, 10 item memiliki genre _Action, Adventure, Science, Fiction_ (similar).
+
+Kemudian untuk menghitung metrik Precision, gunakan kode berikut.
+
+```
+recommended_film = 11 # jumlah item yang direkomendasikan sistem
+relevant_film = 10 # jumlah item rekomendasi yang genrenya relevan (similar) dengan yang disukai pengguna
+precision = relevant_film/recommended_film
+print(precision)
+```
+
+Hasilnya seperti berikut.
+
+![Hasil presisi](https://raw.githubusercontent.com/samuelpakpahan20/rekomendasifilm/master/images/)
+
+ Dari hasil ini, metrik Precision kita bernilai 0.909, berarti Precision sistem kita sebesar 91%.
 
 Terakhir, dilihat dari output hasil rekomendasi pada yab [Modeling](#modeling) tadi, mari coba kita bandingkan dengan mencari di Google untuk film yang mirip dengan **Star Trek Beyond** dan inilah hasilnya.
 
